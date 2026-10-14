@@ -22,8 +22,15 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Make gradlew executable
-        run: chmod +x ./gradlew
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Generate Gradle wrapper if missing
+        run: |
+          if [ ! -f ./gradlew ]; then
+            gradle wrapper --gradle-version 8.7
+          fi
+          chmod +x ./gradlew
 
       - name: Cache Gradle packages
         uses: actions/cache@v4
@@ -31,7 +38,7 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/gradle-wrapper.properties') }}
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
 
