@@ -165,8 +165,8 @@ class PairingService : Service() {
                     if (intent == null) return
                     when (intent.action) {
                         BluetoothDevice.ACTION_BOND_STATE_CHANGED -> {
-                            val dev: BluetoothDevice? = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
-                            if (dev?.address != device.address) return
+                            val dev = intent.getParcelableExtra<BluetoothDevice>(BluetoothDevice.EXTRA_DEVICE) as? BluetoothDevice ?: return
+                            if (dev.address != device.address) return
                             val state = intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, -1)
                             val prev = intent.getIntExtra(BluetoothDevice.EXTRA_PREVIOUS_BOND_STATE, -1)
                             broadcastLog("Bond state for ${dev.address}: $prev -> $state")
@@ -179,8 +179,8 @@ class PairingService : Service() {
                             }
                         }
                         BluetoothDevice.ACTION_PAIRING_REQUEST -> {
-                            val dev: BluetoothDevice? = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
-                            if (dev?.address != device.address) return
+                            val dev = intent.getParcelableExtra<BluetoothDevice>(BluetoothDevice.EXTRA_DEVICE) as? BluetoothDevice ?: return
+                            if (dev.address != device.address) return
                             broadcastLog("Pairing request detected for ${dev.address}")
                             if (autoCancelOnPairingRequest) {
                                 try {
