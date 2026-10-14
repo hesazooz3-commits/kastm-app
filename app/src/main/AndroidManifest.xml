@@ -13,7 +13,7 @@
         android:label="BT Pair Pro"
         android:roundIcon="@drawable/ic_notification"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
+        android:theme="@style/Theme.KastmApp">
 
         <activity
             android:name=".MainActivity"
